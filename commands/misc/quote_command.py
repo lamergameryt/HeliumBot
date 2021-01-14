@@ -14,7 +14,7 @@ class QuoteCommand(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def quote(self, ctx):
+    async def quote(self, ctx: commands.Context):
         response = requests.get(QUOTE_API).json()
         await ctx.send(embed=statics.get_embed(response[0]['q'], 'Here is a random quote for you'))
 
