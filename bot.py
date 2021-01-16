@@ -1,6 +1,6 @@
 import os
 import sys
-
+from pretty_help import PrettyHelp
 import yaml
 from discord.ext import commands
 
@@ -25,19 +25,14 @@ except:
     print('The config.yaml file could not be loaded.')
     sys.exit(1)
 
-bot = commands.Bot(command_prefix=config['prefix'])
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(config['prefix']),
+                   case_insensitive=True,
+                   owner_id=287888563020890138,
+                   help_command=PrettyHelp(sort_commands=True, color=0xeb4034)
+                   )
 
 if __name__ == '__main__':
-    print('[Events]'.center(30, '-') + '\n')
-    """
-    Load all the events present in the events folder.
-    """
-    for file in os.listdir('events'):
-        if file.endswith('.py') and not file.startswith('_'):
-            bot.load_extension(f'events.{file[:-3]}')
-            print(f'Loaded the event: {file}')
-
-    print('\n' + '[Commands]'.center(30, '-') + '\n')
+    print('[Categories]'.center(30, '-') + '\n')
     """
     Load all the commands present in the commands folder.
     """
@@ -45,7 +40,16 @@ if __name__ == '__main__':
         for file in os.listdir(f'commands\\{directory}'):
             if file.endswith('.py') and not file.startswith('_'):
                 bot.load_extension(f'commands.{directory}.{file[:-3]}')
-                print(f'Loaded the command: {file}')
+                print(f'Loaded the category: {file}')
+
+    print('\n' + '[Events]'.center(30, '-') + '\n')
+    """
+    Load all the events present in the events folder.
+    """
+    for file in os.listdir('events'):
+        if file.endswith('.py') and not file.startswith('_'):
+            bot.load_extension(f'events.{file[:-3]}')
+            print(f'Loaded the event: {file}')
 
     print('\n' + ''.center(30, '-') + '\n')
 

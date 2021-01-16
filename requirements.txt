@@ -1,3 +1,5 @@
+DiscordUtils
 requests
 discord.py
 pyyaml
+discord-pretty-help

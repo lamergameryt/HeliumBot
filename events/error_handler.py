@@ -31,7 +31,8 @@ class ErrorHandler(commands.Cog):
         elif isinstance(error, commands.CheckFailure):
             # The user doesn't have the required permissions to use this command.
             await ctx.send("Hey! You lack permission to use this command.")
-        raise error
+        else:
+            raise error
 
 
 def setup(bot: commands.Bot):
